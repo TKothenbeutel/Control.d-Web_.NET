@@ -1,0 +1,6 @@
+@ControlDWeb_HostAddress = http://localhost:5188
+
+GET {{ControlDWeb_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
