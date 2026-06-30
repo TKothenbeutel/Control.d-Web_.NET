@@ -1,6 +1,10 @@
-@ControlDWeb_HostAddress = http://localhost:5188
+@HostAddress = http://localhost:5188
 
-GET {{ControlDWeb_HostAddress}}/weatherforecast/
+GET {{HostAddress}}/api/Account
 Accept: application/json
+
+###
+
+DELETE {{HostAddress}}/api/Account/1
 
 ###
