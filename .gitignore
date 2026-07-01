@@ -55,3 +55,28 @@ CodeCoverage/
 *.VisualState.xml
 TestResult.xml
 nunit-*.xml
+
+
+# React gitignore
+
+# dependencies
+controld-frontend/node_modules
+controld-frontend/.pnp
+controld-frontend/.pnp.js
+
+# testing
+controld-frontend/coverage
+
+# production
+controld-frontend/build
+
+# misc
+controld-frontend/.DS_Store
+controld-frontend/.env.local
+controld-frontend/.env.development.local
+controld-frontend/.env.test.local
+controld-frontend/.env.production.local
+
+controld-frontend/npm-debug.log*
+controld-frontend/yarn-debug.log*
+controld-frontend/yarn-error.log*
