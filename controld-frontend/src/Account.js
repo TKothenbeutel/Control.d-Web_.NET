@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 const ACCOUNT_API = process.env.REACT_APP_API_URL + '/account';
 
 const accountTemplate = {
-  'accountId': null,
+  'accountId': 0,
   'email': '',
   'username': ''
 };

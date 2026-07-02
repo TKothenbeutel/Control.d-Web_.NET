@@ -8,8 +8,11 @@ builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 builder.Services.AddDbContext<AccountContext>(opt =>
 {
-    opt.UseInMemoryDatabase("Accounts");
+    var connectionString = builder.Configuration.GetConnectionString("AccountsConnection");
+    opt.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
 });
+
+builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddCors(options =>
 {
@@ -33,10 +36,21 @@ if (app.Environment.IsDevelopment())
     {
         options.DocumentPath = "/openapi/v1.json";
     });
+    app.UseDeveloperExceptionPage();
+    app.UseMigrationsEndPoint();
 }
 
-app.UseDefaultFiles();
-app.UseStaticFiles();
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+
+    var context = services.GetRequiredService<AccountContext>();
+    context.Database.EnsureCreated();
+
+}
+
+//app.UseDefaultFiles();
+//app.UseStaticFiles();
 
 app.UseHttpsRedirection();
 

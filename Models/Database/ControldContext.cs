@@ -1,6 +1,7 @@
+/*
 using Microsoft.EntityFrameworkCore;
 
-public class AccountContext(DbContextOptions<AccountContext> options) : DbContext(options)
+public class ControldContext(DbContextOptions<AccountContext> options) : DbContext(options)
 {
     public DbSet<Account> Accounts { get; set; }
     public DbSet<Review> Reviews { get; set; }
@@ -20,4 +21,6 @@ public class AccountContext(DbContextOptions<AccountContext> options) : DbContex
         modelBuilder.Entity<Platform>().ToTable("Platforms");
         modelBuilder.Entity<Genre>().ToTable("Genres");
     }
+
 }
+*/
