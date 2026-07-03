@@ -8,7 +8,7 @@ builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 builder.Services.AddDbContext<ControldContext>(opt =>
 {
-    var connectionString = builder.Configuration.GetConnectionString("AccountsConnection");
+    var connectionString = builder.Configuration.GetConnectionString("DatabaseConnection");
     opt.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
 });
 

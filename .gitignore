@@ -56,9 +56,6 @@ CodeCoverage/
 TestResult.xml
 nunit-*.xml
 
-# Development app settings
-*.Development.json
-
 
 # React gitignore
 
@@ -83,3 +80,4 @@ controld-frontend/.env.production.local
 controld-frontend/npm-debug.log*
 controld-frontend/yarn-debug.log*
 controld-frontend/yarn-error.log*
+appsettings.Development.json
