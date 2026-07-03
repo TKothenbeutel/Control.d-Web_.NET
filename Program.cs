@@ -6,7 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
-builder.Services.AddDbContext<AccountContext>(opt =>
+builder.Services.AddDbContext<ControldContext>(opt =>
 {
     var connectionString = builder.Configuration.GetConnectionString("AccountsConnection");
     opt.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
@@ -44,8 +44,8 @@ using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
 
-    var context = services.GetRequiredService<AccountContext>();
-    context.Database.EnsureCreated();
+    var context = services.GetRequiredService<ControldContext>();
+    DbInitializer.Initialize(context);
 
 }
 

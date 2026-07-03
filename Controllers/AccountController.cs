@@ -14,9 +14,9 @@ namespace ControlDWeb.Controllers
     [ApiController]
     public class AccountController : ControllerBase
     {
-        private readonly AccountContext _context;
+        private readonly ControldContext _context;
 
-        public AccountController(AccountContext context)
+        public AccountController(ControldContext context)
         {
             _context = context;
         }

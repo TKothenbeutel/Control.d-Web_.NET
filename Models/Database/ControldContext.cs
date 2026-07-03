@@ -1,7 +1,6 @@
-/*
 using Microsoft.EntityFrameworkCore;
 
-public class ControldContext(DbContextOptions<AccountContext> options) : DbContext(options)
+public class ControldContext(DbContextOptions<ControldContext> options) : DbContext(options)
 {
     public DbSet<Account> Accounts { get; set; }
     public DbSet<Review> Reviews { get; set; }
@@ -13,6 +12,7 @@ public class ControldContext(DbContextOptions<AccountContext> options) : DbConte
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        //Connect entity to table
         modelBuilder.Entity<Account>().ToTable("Accounts");
         modelBuilder.Entity<Review>().ToTable("Reviews");
 
@@ -20,7 +20,20 @@ public class ControldContext(DbContextOptions<AccountContext> options) : DbConte
         modelBuilder.Entity<Publisher>().ToTable("Publishers");
         modelBuilder.Entity<Platform>().ToTable("Platforms");
         modelBuilder.Entity<Genre>().ToTable("Genres");
-    }
 
+        //Connect Many-to-Many
+        modelBuilder.Entity<Platform>()
+            .HasMany(e => e.Games)
+            .WithMany(e => e.Platforms);
+        modelBuilder.Entity<Genre>()
+            .HasMany(e => e.Games)
+            .WithMany(e => e.Genres);
+        modelBuilder.Entity<Account>()
+            .HasMany(e => e.FavoriteGames)
+            .WithMany();
+        modelBuilder.Entity<Account>()
+            .HasMany(e => e.Following)
+            .WithMany(e => e.Followers);
+    }
+    
 }
-*/
