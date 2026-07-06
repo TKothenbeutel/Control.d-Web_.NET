@@ -10,3 +10,7 @@ DELETE {{HostAddress}}/api/Account/1
 ###
 
 GET {{HostAddress}}/api/Review?ForGame=1
+
+###
+
+GET {{HostAddress}}/api/Game/1

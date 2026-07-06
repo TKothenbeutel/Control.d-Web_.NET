@@ -157,10 +157,10 @@ namespace ControlDWeb.Controllers
         string SortBy = "topLiked",
         string SortDir = "desc",
         int Page = 1,
-        int PageSize = 20
+        int PageSize = 10
     )
     {
-        public int ClampedPageSize => Math.Min(PageSize, 50);
+        public int ClampedPageSize => Math.Min(PageSize, 10);
         public int Skip => (Page - 1) * ClampedPageSize;
     }
 }
