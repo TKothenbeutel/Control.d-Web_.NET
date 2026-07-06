@@ -1,3 +1,13 @@
+:root{
+  --background: #69385C;
+  --backgroundDark: #4D2945;
+  --panelMask: #715b65;
+  --button: #715B64;
+  --textBox: #C1AE9F;
+  --textLight: #D3BDB0;
+  --textDark: #090207;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -5,6 +15,37 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  background-color: var(--backgroundDark);
+  color: var(--textLight);
+  padding: 5vw;/*40px;*/
+}
+
+#root {
+  background-color: var(--background);
+  color: var(--textLight);
+  padding: 0 2vw 0 2vw;
+}
+
+p {
+  background-color: var(--textBox);
+  color: var(--textDark);
+  padding: 10px;
+}
+
+h4 {
+  margin-top: unset;
+}
+
+button {
+  background-color: var(--button);
+  color: var(--textLight);
+  border: 1px outset gray;
+  cursor: pointer;
+}
+button:disabled{
+  background-color: var(--backgroundDark);
+  cursor: unset;
 }
 
 code {

@@ -2,6 +2,7 @@ import { Suspense, useEffect, useMemo, useState } from "react";
 import SvgStar from "./star.svg";
 import SvgStarFilled from "./starFill.svg";
 import PortalImage from "./portal.jpg"
+import './games.css';
 
 const DB_API = process.env.REACT_APP_API_URL;
 
@@ -12,7 +13,7 @@ const checkedStar = {
 };
 
 const Rating = ({rating}) => (
-    <div>
+    <div className="starRating">
         <img src={rating>=0.5 ? SvgStarFilled : SvgStar}/>
         <img src={rating>=1.5 ? SvgStarFilled : SvgStar}/>
         <img src={rating>=2.5 ? SvgStarFilled : SvgStar}/>
@@ -23,8 +24,8 @@ const Rating = ({rating}) => (
 );
 
 const Review = (props) => (
-    <div>
-        <h2 className="reviewTitle">{props.title}</h2>
+    <div className="review">
+        <h3 className="reviewTitle">{props.title}</h3>
         <Rating rating={props.rating}/>
         <p className="reviewBody">{props.body}</p>
         <h6 className="reviewDate">{props.date}</h6>
@@ -55,14 +56,15 @@ function ReviewsBox({ gameId, reviewCount }){
     }, [reviewCount]);
 
     return (
-        <div>
+        <div className="reviewContainer">
+            <h1>Reviews</h1>
             {reviews.map((review) =>
                 <div key={review.reviewId} className="reviewBox">
                     <Review title={review.title} rating={review.rating} body={review.body} date={review.reviewDate} />
                 </div>
             )}
-            <div id="pageSelection">
-                <hr/>
+            <hr/>
+            <div className="pageSelection">
                 {pageButtons.map((i) => 
                     <button key={i} onClick={() => setPageNumber(i)} disabled={i === pageNumber}>{i}</button>
                 )}
@@ -77,12 +79,17 @@ function GameInfo({game}){
 
     return (
         <div>
-            <img src={game.name === "Portal" ? PortalImage : null} alt="Game cover art" style={{width:"300px"}}/>
-            <div>
-                <h2>{game.name}</h2>
-                <h4>Released on {game.date}</h4>
-                <Rating rating={game.rating} />
+            <div className="gameInfo">
+                <img src={game.name === "Portal" ? PortalImage : null} alt="Game cover art"/>
+                <div>
+                    <h3>{game.name}</h3>
+                    <Rating rating={game.rating} />
+                    
+                    <h4>Released on {game.date}</h4>
+                    
+                </div>
             </div>
+            
             <div className="descBox">
                 <p>{game.description}</p>
             </div>
@@ -114,8 +121,9 @@ function GamePage(props){
     }, []);
 
     return (
-        <div>
+        <div className="gamePage">
             <GameInfo game={game} />
+            <div className="verticalSeparator" />
             <Suspense fallback={<p>Loading Reviews</p>}>
                 <ReviewsBox gameId={gameId} reviewCount={game.reviewCount} />
             </Suspense>

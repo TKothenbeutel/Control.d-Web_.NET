@@ -8,6 +8,7 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <GamePage gameId={1} />
+    <div style={{height:"50px",backgroundColor:"black"}}></div>
     <AccountDebug />
   </React.StrictMode>
 );
