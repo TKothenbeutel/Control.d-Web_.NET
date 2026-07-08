@@ -89,7 +89,14 @@ namespace ControlDWeb.Controllers
         [HttpPost]
         public async Task<ActionResult<Review>> PostReview(Review review)
         {
+            //Add review
             _context.Reviews.Add(review);
+            //Update game review stats
+            Game game = await _context.Games.FindAsync(review.GameId);
+            game.ReviewCount += 1;
+            game.RatingTotal += review.Rating;
+            _context.Entry(game).State = EntityState.Modified;
+
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetReview", new { id = review.ReviewId }, review);
@@ -104,8 +111,14 @@ namespace ControlDWeb.Controllers
             {
                 return NotFound();
             }
-
+            //Update game review stats
+            Game game = await _context.Games.FindAsync(review.GameId);
+            game.ReviewCount -= 1;
+            game.RatingTotal -= review.Rating;
+            _context.Entry(game).State = EntityState.Modified;
+            //Remove review
             _context.Reviews.Remove(review);
+
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -120,12 +133,17 @@ namespace ControlDWeb.Controllers
         {
             if(q.ForGame != -1)
                 query = query.Where(r =>
-                    r.Game.GameId == q.ForGame
+                    r.GameId == q.ForGame
                 );
             
             if(q.ByAccount != -1)
                 query = query.Where(r =>
-                    r.Account.AccountId == q.ByAccount
+                    r.AccountId == q.ByAccount
+                );
+
+            if(q.ExcludeAccount != -1)
+                query = query.Where(r =>
+                    r.AccountId != q.ExcludeAccount
                 );
 
             if(!string.IsNullOrWhiteSpace(q.Search))
@@ -153,6 +171,7 @@ namespace ControlDWeb.Controllers
     public record ReviewQuery(
         long ForGame = -1,
         long ByAccount = -1,
+        long ExcludeAccount = -1,
         string Search = null,
         string SortBy = "topLiked",
         string SortDir = "desc",

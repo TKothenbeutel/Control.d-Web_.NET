@@ -37,11 +37,12 @@ h4 {
   margin-top: unset;
 }
 
-button {
+button, input[type=submit] {
   background-color: var(--button);
   color: var(--textLight);
   border: 1px outset gray;
   cursor: pointer;
+  padding: 0.5vw;
 }
 button:disabled{
   background-color: var(--backgroundDark);

@@ -29,15 +29,6 @@
 
 }
 
-.starRating {
-    display: flex;
-    align-items: center;
-
-    & > span{
-        margin-left: 10px;
-    }
-}
-
 .descBox > p {
     min-height: 200px;
     margin: 0;
@@ -48,53 +39,4 @@
     border-left: 5px solid var(--backgroundDark);
     padding: 0;
     margin:  10% 10px 10% 10px !important;
-}
-
-.reviewContainer {
-    display: flex;
-    flex-direction: column;
-    background-color: var(--panelMask);
-    padding: 1vw;
-}
-
-.review {
-    display: grid;
-    grid: auto auto auto / auto auto;
-    justify-items: space-between;
-    background-color: var(--textBox);
-    padding: 1vw;
-
-    & > *{
-        color: var(--textDark);
-        margin-top: 0;
-        margin-bottom: 0;
-    }
-
-    & > .starRating{
-        justify-self: right;
-    }
-
-    & > p{
-        grid-area: 2 / 1 / span 1 / span 2;
-    }
-}
-
-.pageSelection {
-    display: flex;
-    background-color: var(--textLight);
-    margin-top: auto;
-    border-top: 1px solid black;
-
-    & > button{
-        margin: 2px 7px 2px 7px;
-    }
-    
-    & > button:first-of-type{
-        margin-left: auto;
-    }
-
-    & > button:last-of-type{
-        margin-right: auto;
-    }
-
 }

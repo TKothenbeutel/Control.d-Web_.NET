@@ -58,7 +58,7 @@ public static class DbInitializer
 
         var reviews = new Review[]
         {
-            new Review{Rating=4.9F, Title="Very good game!", Body="Oh my goodness this game is awesome! I love being able to go through the portals and also experience the story. I hope they make a sequel!", Likes=0, ReviewDate=DateOnly.Parse("2026-01-01"), Account=accounts[0], Game=games[0]}
+            new Review{Rating=4.5F, Title="Very good game!", Body="Oh my goodness this game is awesome! I love being able to go through the portals and also experience the story. I hope they make a sequel!", Likes=0, ReviewDate=DateOnly.Parse("2026-01-01"), AccountId=accounts[0].AccountId, GameId=games[0].GameId}
         };
         context.Reviews.AddRange(reviews);
         context.SaveChanges();

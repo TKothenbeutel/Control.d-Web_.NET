@@ -1,0 +1,71 @@
+.reviewContainer {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--panelMask);
+    padding: 1vw;
+}
+
+.reviewBox {
+    display: grid;
+    grid: auto auto auto / auto auto;
+    justify-items: space-between;
+    background-color: var(--textBox);
+    padding: 1vw;
+    margin-bottom: 1vw;
+
+    & > *{
+        color: var(--textDark);
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+
+    & > .starRating{
+        justify-self: right;
+    }
+
+    & > p{
+        grid-area: 2 / 1 / span 1 / span 2;
+    }
+}
+
+.titleInput {
+    width: 100%;
+    background-color: var(--panelMask);
+    border: unset;
+    border-bottom: 2px solid var(--textBox);
+    font-size: 16pt;
+
+    &:focus{
+        outline: unset;
+    }
+}
+
+.bodyInput {
+    min-width: 35vw;
+    background-color: var(--textBox);
+    font-size: 14pt;
+
+    &:focus{
+        outline: unset;
+    }
+}
+
+.pageSelection {
+    display: flex;
+    background-color: var(--textLight);
+    margin-top: auto;
+    border-top: 1px solid black;
+
+    & > button{
+        margin: 2px 7px 2px 7px;
+    }
+    
+    & > button:first-of-type{
+        margin-left: auto;
+    }
+
+    & > button:last-of-type{
+        margin-right: auto;
+    }
+
+}
