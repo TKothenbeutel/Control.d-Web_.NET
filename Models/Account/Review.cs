@@ -19,4 +19,12 @@ public class Review
     public string Title { get; set; }
     public string Body { get; set; }
     public int Likes { get; set; } = 0;
+
+    public ICollection<Account> Likers { get; set; }
+
+    public string AccountUsername { get; set; }
+    public string GameName { get; set; }
+
+    public Account Account { get; set; }
+    public Game Game { get; set; }
 }

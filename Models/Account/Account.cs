@@ -15,4 +15,6 @@ public class Account
 
     public ICollection<Account> Followers { get; set; }
     public ICollection<Account> Following { get; set; }
+
+    //public ICollection<Review> LikedReviews { get; set; }
 }

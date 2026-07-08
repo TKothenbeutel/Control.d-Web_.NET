@@ -23,7 +23,22 @@ namespace ControlDWeb.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Review>>> GetReviews([FromQuery] ReviewQuery query)
         {
-            var q = _context.Reviews.AsNoTracking();
+            var q = _context.Reviews
+                .Include(r => r.Account)
+                .Select(r => new Review
+                {
+                    ReviewId = r.ReviewId,
+                    AccountId = r.AccountId,
+                    GameId = r.GameId,
+                    ReviewDate = r.ReviewDate,
+                    Rating = r.Rating,
+                    Title = r.Title,
+                    Body = r.Body,
+                    Likes = r.Likes,
+                    AccountUsername = r.Account.Username,
+                    GameName = r.Game.Name
+                })
+                .AsNoTracking();
 
             q = ApplyFilters(q, query);
 
@@ -128,8 +143,54 @@ namespace ControlDWeb.Controllers
         {
             return _context.Reviews.Any(e => e.ReviewId == id);
         }
+
+        /* Likes API */
+
+        [HttpGet("Likes/{id}")]
+        public async Task<ActionResult<IEnumerable<ReviewLikes>>> GetLikes(long id)
+        {
+            return await _context.ReviewLikes.Where(x => x.AccountId == id).ToListAsync();
+        }
+
+        [HttpPost("Likes")]
+        public async Task<IActionResult> PostLike(ReviewLikes like)
+        {
+            _context.ReviewLikes.Add(like);
+            //Add like to review
+            Review review = await _context.Reviews.FindAsync(like.ReviewId);
+            review.Likes += 1;
+            _context.Entry(review).State = EntityState.Modified;
+
+            await _context.SaveChangesAsync();
+
+            return Created();
+        }
+
+        [HttpDelete("Likes/{likerId}/{reviewId}")]
+        public async Task<IActionResult> DeleteLike(long likerId, long reviewId)
+        {
+            var reviewLike = await _context.ReviewLikes.FindAsync(likerId, reviewId);
+            if(reviewLike == null)
+            {
+                return NotFound();
+            }
+            //Update review like count
+            var review = await _context.Reviews.FindAsync(reviewId);
+            Console.WriteLine(reviewId);
+            review.Likes -= 1;
+            _context.Entry(review).State = EntityState.Modified;
+
+            _context.ReviewLikes.Remove(reviewLike);
+
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
+
+
     
-    private static IQueryable<Review> ApplyFilters(IQueryable<Review> query, ReviewQuery q)
+        private static IQueryable<Review> ApplyFilters(IQueryable<Review> query, ReviewQuery q)
         {
             if(q.ForGame != -1)
                 query = query.Where(r =>

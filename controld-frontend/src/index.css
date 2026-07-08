@@ -42,7 +42,7 @@ button, input[type=submit] {
   color: var(--textLight);
   border: 1px outset gray;
   cursor: pointer;
-  padding: 0.5vw;
+  padding: 0.2vw;
 }
 button:disabled{
   background-color: var(--backgroundDark);

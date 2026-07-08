@@ -7,7 +7,7 @@
 
 .reviewBox {
     display: grid;
-    grid: auto auto auto / auto auto;
+    grid: auto auto auto auto / auto auto;
     justify-items: space-between;
     background-color: var(--textBox);
     padding: 1vw;
@@ -24,7 +24,7 @@
     }
 
     & > p{
-        grid-area: 2 / 1 / span 1 / span 2;
+        grid-area: 3 / 1 / span 1 / span 2;
     }
 }
 

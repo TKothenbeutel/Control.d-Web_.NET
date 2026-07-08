@@ -4,6 +4,7 @@ public class ControldContext(DbContextOptions<ControldContext> options) : DbCont
 {
     public DbSet<Account> Accounts { get; set; }
     public DbSet<Review> Reviews { get; set; }
+    public DbSet<ReviewLikes> ReviewLikes { get; set; }
 
     public DbSet<Game> Games { get; set; }
     public DbSet<Publisher> Publishers { get; set; }
@@ -15,6 +16,7 @@ public class ControldContext(DbContextOptions<ControldContext> options) : DbCont
         //Connect entity to table
         modelBuilder.Entity<Account>().ToTable("Accounts");
         modelBuilder.Entity<Review>().ToTable("Reviews");
+        modelBuilder.Entity<ReviewLikes>().ToTable("ReviewLikes");
 
         modelBuilder.Entity<Game>().ToTable("Games");
         modelBuilder.Entity<Publisher>().ToTable("Publishers");
@@ -34,6 +36,13 @@ public class ControldContext(DbContextOptions<ControldContext> options) : DbCont
         modelBuilder.Entity<Account>()
             .HasMany(e => e.Following)
             .WithMany(e => e.Followers);
+        modelBuilder.Entity<Review>()
+            .HasOne(e => e.Account)
+            .WithMany();
+        modelBuilder.Entity<Review>()
+            .HasMany(e => e.Likers)
+            .WithMany()//(e => e.LikedReviews)
+            .UsingEntity<ReviewLikes>();
     }
     
 }

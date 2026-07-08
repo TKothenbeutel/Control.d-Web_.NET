@@ -14,3 +14,11 @@ GET {{HostAddress}}/api/Review?ForGame=1
 ###
 
 GET {{HostAddress}}/api/Game/1
+
+###
+
+DELETE {{HostAddress}}/api/Review/Likes/2/1
+
+###
+
+GET {{HostAddress}}/api/Review/Likes/2

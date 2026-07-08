@@ -4,14 +4,38 @@ import "./reviews.css";
 
 const DB_API = process.env.REACT_APP_API_URL;
 
-const Review = (props) => (
-    <>
-        <h3 className="reviewTitle">{props.title}</h3>
-        <Rating rating={props.rating}/>
-        <p className="reviewBody">{props.body}</p>
-        <h6 className="reviewDate">{props.date}</h6>
-    </>
-);
+function Review({review, deleteHandler = null, likeHandler = null}){
+
+    const like = (e) => {
+        var successfulUpdate
+        if(e.target.checked){
+            successfulUpdate = likeHandler(review.reviewId, true);
+        }else{
+            successfulUpdate = likeHandler(review.reviewId, false);
+        }
+
+        if(!successfulUpdate){
+            e.target.checked = !e.target.checked;
+        }
+    }
+
+    return (
+        <>
+            <h4>{review.accountUsername}</h4>
+            {deleteHandler === null ? <div></div> : 
+            <button onClick={() => deleteHandler(review.reviewId)}>X</button>}
+            <h3 className="reviewTitle">{review.title}</h3>
+            <Rating rating={review.rating}/>
+            <p className="reviewBody">{review.body}</p>
+            <h6 className="reviewDate">{review.reviewDate}</h6>
+            {likeHandler === null ? <div></div> :
+                <div style={{justifySelf:"right"}}>
+                    <input type="checkbox" className="likeButton" onClick={like} checked={review.liked}/>
+                    <span>{review.likes > 0 ? "+"+review.likes : review.likes}</span>
+                </div>
+            }
+        </>
+)};
 
 function OwnReview({ gameId, accountId, writeMode, setWriteMode, setOwnReviewCount }){
     const [ reviews, setReviews ] = useState([]);
@@ -43,8 +67,7 @@ function OwnReview({ gameId, accountId, writeMode, setWriteMode, setOwnReviewCou
         <>
             {reviews.map((review) =>
                 <div key={review.reviewId} className="reviewBox">
-                    <Review title={review.title} rating={review.rating} body={review.body} date={review.reviewDate} />
-                    <button onClick={() => deleteReview(review.reviewId)}>X</button>
+                    <Review review={review} deleteHandler={deleteReview} />
                 </div>
             )} 
         </>
@@ -129,6 +152,22 @@ function ReviewsBox({ gameId, accountId, reviewCount }){
             .then(data => setReviews(data));
     }, [pageNumber, ownReviewCount]);
 
+    //Mark liked reviews
+    useEffect(() => {
+        if(reviews.length === 0 || reviews[0].hasOwnProperty("liked")){
+            return;
+        }
+        fetch(DB_API+`/Review/Likes/${accountId}`)
+            .then(response => response.json())
+            .then(data => {
+                setReviews(reviews.map(review => ({
+                    ...review,
+                    liked: data.findIndex(e => e.reviewId === review.reviewId) !== -1
+                })   
+                ));
+            });
+    }, [reviews]);
+
     //Populate page number list (used to map buttons)
     const pageButtons = useMemo(() => {
         const pages = [];
@@ -138,6 +177,38 @@ function ReviewsBox({ gameId, accountId, reviewCount }){
         }
         return pages;
     }, [reviewCount]);
+
+    const likeHandler = (id, liked) => {
+        var review = reviews.find(r => r.reviewId === id);
+        const index = reviews.indexOf(review);
+        if(liked){
+            return fetch(DB_API+`/Review/Likes/`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"  
+                },
+                body: JSON.stringify({reviewId: id, accountId: accountId})
+            }).then(result => {
+                if(result.status === 201){
+                    review = {...review, likes: review.likes+1, liked:true};
+                    setReviews(reviews.slice(0,index).concat(review).concat(reviews.slice(index+1)));
+                    return true;
+                }
+                return false;
+            });
+        }else{
+            return fetch(DB_API+`/Review/Likes/${accountId}/${id}`, {
+                method: "DELETE"
+            }).then(result => {
+                if(result.status === 204){
+                    review = {...review, likes: review.likes-1, liked:false};
+                    setReviews(reviews.slice(0,index).concat(review).concat(reviews.slice(index+1)));
+                    return true;
+                }
+                return false;
+            });
+        }
+    };
 
     return ( writeMode ? <WriteReview gameId={gameId} accountId={accountId} writeMode={writeMode} setWriteMode={setWriteMode}/> :
         <div className="reviewContainer">
@@ -149,7 +220,7 @@ function ReviewsBox({ gameId, accountId, reviewCount }){
             <OwnReview gameId={gameId} accountId={accountId} writeMode={writeMode} setWriteMode={setWriteMode} setOwnReviewCount={setOwnReviewCount} />
             {reviews.map((review) =>
                 <div key={review.reviewId} className="reviewBox">
-                    <Review title={review.title} rating={review.rating} body={review.body} date={review.reviewDate} />
+                    <Review review={review} likeHandler={likeHandler} />
                 </div>
             )}
             <hr/>
