@@ -23,10 +23,35 @@
 
     & > div{
         display: grid;
-        grid: auto auto / auto auto;
+        grid: auto auto auto auto / auto auto;
         justify-content: space-between;
+        padding-bottom: 10px;
+
+        & > h3, .starRating{
+            width: 100%;
+            grid-column-end: span 2;
+            justify-content: center;
+            text-align: center;
+            border-bottom: 2px solid var(--backgroundDark);
+            padding-bottom: 5px;
+            margin-bottom: 1vw;
+        }
     }
 
+}
+
+div:has(.tag) {
+    justify-self: end;
+}
+.tag {
+    background-color: var(--button);
+    font-size: smaller;
+    border-radius: 5px;
+    padding: 0 3px 0 3px;
+    margin-left: 5px;
+}
+.platform {
+    background-color: var(--backgroundDark);
 }
 
 .descBox > p {

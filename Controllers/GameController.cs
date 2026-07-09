@@ -44,7 +44,11 @@ namespace ControlDWeb.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Game>> GetGame(long id)
         {
-            var game = await _context.Games.FindAsync(id);
+            var game = await _context.Games
+                .Include(g => g.Publisher)
+                .Include(g => g.Genres)
+                .Include(g => g.Platforms)
+                .FirstOrDefaultAsync(g => g.GameId == id);
 
             if (game == null)
             {

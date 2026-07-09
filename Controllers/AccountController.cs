@@ -34,7 +34,16 @@ namespace ControlDWeb.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<AccountDTO>> GetAccount(long id)
         {
-            var account = await _context.Accounts.FindAsync(id);
+            var account = await _context.Accounts
+                .Include(a => a.FavoriteGames)
+                .Select(a => new Account
+                {
+                    AccountId = a.AccountId,
+                    Email = a.Email,
+                    Username = a.Username,
+                    FavoriteGames = a.FavoriteGames.Select(g => new Game{GameId=g.GameId, Name=g.Name}).ToArray()
+                })
+                .FirstOrDefaultAsync(a => a.AccountId == id);
 
             if (account == null)
             {
@@ -74,6 +83,53 @@ namespace ControlDWeb.Controllers
 
             return NoContent();
         }
+
+        [HttpDelete("{id}/FavoriteGame/{gameId}")]
+        public async Task<IActionResult> RemoveFavoriteGame(long id, long gameId)
+        {
+            //TODO: add security to ensure person is signed into this account
+            var account = await _context.Accounts.Include(a => a.FavoriteGames).FirstOrDefaultAsync(a => a.AccountId == id);
+            if(account == null)
+            {
+                return BadRequest();
+            }
+
+            var game = account.FavoriteGames.FirstOrDefault(g => g.GameId == gameId);
+            if(game == null)
+            {
+                return BadRequest();
+            }
+
+            var hm = account.FavoriteGames.Remove(game);
+            _context.Entry(account).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
+        [HttpPut("{id}/FavoriteGame")]
+        public async Task<IActionResult> AddFavoriteGame(long id, Game game)
+        {
+            //TODO: add security to ensure person is signed into this account
+            var account = await _context.Accounts.Include(a => a.FavoriteGames).FirstOrDefaultAsync(a => a.AccountId == id);
+            if(account == null)
+            {
+                return BadRequest();
+            }
+
+            game = await _context.Games.FindAsync(game.GameId);
+            if(game == null)
+            {
+                return BadRequest();
+            }
+
+            account.FavoriteGames.Add(game);
+            _context.Entry(account).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
 
         // POST: api/Account
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754

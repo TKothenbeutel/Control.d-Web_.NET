@@ -24,12 +24,12 @@ public class ControldContext(DbContextOptions<ControldContext> options) : DbCont
         modelBuilder.Entity<Genre>().ToTable("Genres");
 
         //Connect Many-to-Many
-        modelBuilder.Entity<Platform>()
-            .HasMany(e => e.Games)
-            .WithMany(e => e.Platforms);
-        modelBuilder.Entity<Genre>()
-            .HasMany(e => e.Games)
-            .WithMany(e => e.Genres);
+        modelBuilder.Entity<Game>()
+            .HasMany(e => e.Platforms)
+            .WithMany();
+        modelBuilder.Entity<Game>()
+            .HasMany(e => e.Genres)
+            .WithMany();
         modelBuilder.Entity<Account>()
             .HasMany(e => e.FavoriteGames)
             .WithMany();

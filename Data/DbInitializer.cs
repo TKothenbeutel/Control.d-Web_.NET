@@ -25,24 +25,11 @@ public static class DbInitializer
         context.Publishers.AddRange(publishers);
         context.SaveChanges();
 
-        var games = new Game[]
-        {
-            new Game{Name="Portal", ReleaseDate=DateOnly.Parse("2007-10-10"), Description="Set in the mysterious Aperture Science Laboratories, Portal has been called one of the most innovative new games on the horizon and will offer gamers hours of unique gameplay.", ReviewCount=1, RatingTotal=4.9F, Publisher=publishers[0]}
-        };
-        context.Games.AddRange(games);
-        context.SaveChanges();
-
-        //Favorited game addition
-        accounts[0].FavoriteGames = new HashSet<Game>{games[0]};
-        context.Accounts.AddRange(accounts);
-        context.SaveChanges();
-
-
         var platforms = new Platform[]
         {
-            new Platform{Name="PC", Games=new HashSet<Game>{games[0]}},
-            new Platform{Name="Nintendo Switch", Games=new HashSet<Game>{games[0]}},
-            new Platform{Name="Xbox 360", Games=new HashSet<Game>{games[0]}},
+            new Platform{Name="PC"},
+            new Platform{Name="Nintendo Switch"},
+            new Platform{Name="Xbox 360"},
             new Platform{Name="PS5"}
         };
         context.Platforms.AddRange(platforms);
@@ -50,10 +37,22 @@ public static class DbInitializer
 
         var genres = new Genre[]
         {
-            new Genre{Name="Puzzle", Games=new HashSet<Game>{games[0]}},
-            new Genre{Name="Platformer", Games=new HashSet<Game>{games[0]}}
+            new Genre{Name="Puzzle"},
+            new Genre{Name="Platformer"}
         };
         context.Genres.AddRange(genres);
+        context.SaveChanges();
+
+        var games = new Game[]
+        {
+            new Game{Name="Portal", ReleaseDate=DateOnly.Parse("2007-10-10"), Description="Set in the mysterious Aperture Science Laboratories, Portal has been called one of the most innovative new games on the horizon and will offer gamers hours of unique gameplay.", ReviewCount=1, RatingTotal=4.5F, Publisher=publishers[0], Genres=new HashSet<Genre>{genres[0],genres[1]}, Platforms=new HashSet<Platform>{platforms[0],platforms[1],platforms[2]}}
+        };
+        context.Games.AddRange(games);
+        context.SaveChanges();
+
+        //Favorited game addition
+        accounts[0].FavoriteGames = new HashSet<Game>{games[0]};
+        context.Accounts.AddRange(accounts);
         context.SaveChanges();
 
         var reviews = new Review[]

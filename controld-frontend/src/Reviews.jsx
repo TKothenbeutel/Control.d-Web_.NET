@@ -76,7 +76,7 @@ function OwnReview({ gameId, accountId, writeMode, setWriteMode, setOwnReviewCou
         
 }
 
-function WriteReview({ gameId, accountId, wrtieMode, setWriteMode}){
+function WriteReview({ gameId, accountId, setWriteMode}){
     const [ reviewInputs, setReview ] = useState({starRating: 0});
 
     const updateReview = (e) => {
@@ -210,10 +210,10 @@ function ReviewsBox({ gameId, accountId, reviewCount }){
         }
     };
 
-    return ( writeMode ? <WriteReview gameId={gameId} accountId={accountId} writeMode={writeMode} setWriteMode={setWriteMode}/> :
+    return ( writeMode ? <WriteReview gameId={gameId} accountId={accountId} setWriteMode={setWriteMode}/> :
         <div className="reviewContainer">
             <div>
-                <h1>Reviews</h1>
+                <h1>Reviews ({reviewCount})</h1>
                 {/*NOTE: button will never be disabled, as to allow accounts have multiple reviews per game (only for dev, real accounts should only be able to review once per game) */}
                 <button onClick={() => setWriteMode(true)} disabled={writeMode===0/*null*/}>Write Review</button>
             </div>
