@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" height="100%" viewBox="0 -960 480 960" width="50%" fill="#a2a0a0">
+    <defs>
+        <clipPath id="cut-right">
+            <rect x="0" y="-960" width="480" height="960"/>
+        </clipPath>
+    </defs>
+
+    <path d="M233-120l65-281L80-590l288-25 112-265 112 265 288 25-218 189 65 281-247-149-247 149Zm247-350Z" style="stroke:#cfcdcd;stroke-width:15;" clip-path="url(#cut-right)"/>
+</svg>

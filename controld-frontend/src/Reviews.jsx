@@ -99,9 +99,8 @@ function WriteReview({ gameId, accountId, setWriteMode}){
                 "title": reviewInputs.title,
                 "body": reviewInputs.body
             })
-        });
+        }).then(result => window.location.reload(false));//reload so everything updates
         setWriteMode(false);
-        window.location.reload(false); //Ensure changes affect game's avg rating, for example
     }
 
     return (
@@ -150,7 +149,7 @@ function ReviewsBox({ gameId, accountId, reviewCount }){
         fetch(DB_API+`/Review?ForGame=${gameId}+&ExcludeAccount=${accountId}+&Page=${pageNumber}+&PageSize=${PAGESIZE-ownReviewCount}`)
             .then(response => response.json())
             .then(data => setReviews(data));
-    }, [pageNumber, ownReviewCount]);
+    }, [pageNumber, ownReviewCount, gameId, accountId]);
 
     //Mark liked reviews
     useEffect(() => {
@@ -166,7 +165,7 @@ function ReviewsBox({ gameId, accountId, reviewCount }){
                 })   
                 ));
             });
-    }, [reviews]);
+    }, [reviews, accountId]);
 
     //Populate page number list (used to map buttons)
     const pageButtons = useMemo(() => {
@@ -178,6 +177,7 @@ function ReviewsBox({ gameId, accountId, reviewCount }){
         return pages;
     }, [reviewCount]);
 
+    //Update like count
     const likeHandler = (id, liked) => {
         var review = reviews.find(r => r.reviewId === id);
         const index = reviews.indexOf(review);

@@ -3,6 +3,7 @@
     flex-direction: column;
     background-color: var(--panelMask);
     padding: 1vw;
+    min-width: 30vw;
 }
 
 .reviewBox {
@@ -29,7 +30,7 @@
 }
 
 .titleInput {
-    width: 100%;
+    width: 90%;
     background-color: var(--panelMask);
     border: unset;
     border-bottom: 2px solid var(--textBox);
@@ -41,7 +42,7 @@
 }
 
 .bodyInput {
-    min-width: 35vw;
+    width: 90%;
     background-color: var(--textBox);
     font-size: 14pt;
 

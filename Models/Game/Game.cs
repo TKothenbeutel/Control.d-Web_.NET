@@ -23,6 +23,7 @@ public class Game
 
     public float GetAvgRating()
     {
+        if(ReviewCount == 0) return 0;
         return RatingTotal / ReviewCount;
     }
 }

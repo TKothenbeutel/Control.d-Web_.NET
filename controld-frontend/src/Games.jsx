@@ -14,7 +14,7 @@ function GameInfo({game, favorited, favoriteHandle}){
                 <img src={game.name === "Portal" ? PortalImage : null} alt="Game cover art"/>
                 <div>
                     <h3>{game.name}</h3>      
-                    <span>Publisher: <a href="">{game.publisher.name}</a></span>
+                    <span>Publisher: <a href="/">{game.publisher.name}</a></span>
                     <div>
                         {game.genres.map(genre => 
                             <span key={genre.genreId} className="tag genre">{genre.name}</span>
@@ -26,7 +26,7 @@ function GameInfo({game, favorited, favoriteHandle}){
                             <span key={platform.platformId} className="tag platform">{platform.name}</span>
                         )}
                     </div>
-                    <Rating rating={game.rating} />
+                    <Rating rating={Math.round(game.rating * 10)/10} />
                     <button onClick={favoriteHandle}>{favorited ? "Favorited" : "Favorite"}</button>               
                 </div>
             </div>
@@ -63,7 +63,7 @@ function GamePage(props){
                 description : d.description,
                 date : d.releaseDate,
                 reviewCount : d.reviewCount,
-                rating : d.ratingTotal / d.reviewCount,
+                rating : d.reviewCount === 0 ? 0 : d.ratingTotal / d.reviewCount,
                 publisher : d.publisher,
                 genres : d.genres,
                 platforms : d.platforms,
