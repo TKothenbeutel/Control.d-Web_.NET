@@ -35,13 +35,17 @@ namespace ControlDWeb.Controllers
         public async Task<ActionResult<AccountDTO>> GetAccount(long id)
         {
             var account = await _context.Accounts
-                .Include(a => a.FavoriteGames)
-                .Select(a => new Account
+                .Include(a => a.FavoriteGames).ThenInclude(g => g.Publisher)
+                .Include(a => a.Followers)
+                .Include(a => a.Following)
+                .Select(a => new AccountDTO
                 {
                     AccountId = a.AccountId,
                     Email = a.Email,
                     Username = a.Username,
-                    FavoriteGames = a.FavoriteGames.Select(g => new Game{GameId=g.GameId, Name=g.Name}).ToArray()
+                    FavoriteGames = a.FavoriteGames.Select(g => new Game{GameId=g.GameId, Name=g.Name, Publisher=g.Publisher, ReviewCount=g.ReviewCount, RatingTotal=g.RatingTotal}).ToArray(),
+                    Followers = a.Followers.Select(f => new Account{AccountId=f.AccountId, Username=f.Username}).ToArray(),
+                    Following = a.Following.Select(f => new Account{AccountId=f.AccountId, Username=f.Username}).ToArray()
                 })
                 .FirstOrDefaultAsync(a => a.AccountId == id);
 
@@ -50,7 +54,7 @@ namespace ControlDWeb.Controllers
                 return NotFound();
             }
 
-            return AccountToDTO(account);
+            return account;//AccountToDTO(account);
         }
 
         // PUT: api/Account/5
@@ -116,15 +120,61 @@ namespace ControlDWeb.Controllers
             {
                 return BadRequest();
             }
-
             game = await _context.Games.FindAsync(game.GameId);
             if(game == null)
             {
                 return BadRequest();
             }
-
             account.FavoriteGames.Add(game);
             _context.Entry(account).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
+        [HttpPut("{id}/Follow/{followId}")]
+        public async Task<IActionResult> FollowAccount(long id, long followId)
+        {
+            var ownAccount = await _context.Accounts.Include(a => a.Following).FirstOrDefaultAsync(a => a.AccountId == id);
+            if(ownAccount == null)
+            {
+                return BadRequest();
+            }
+
+            var followAccount = await _context.Accounts.Include(a => a.Followers).FirstOrDefaultAsync(a => a.AccountId == followId);
+            if(followAccount == null)
+            {
+                return BadRequest();
+            }
+
+            ownAccount.Following.Add(followAccount);
+            followAccount.Followers.Add(ownAccount);
+            _context.Entry(ownAccount).State = EntityState.Modified;
+            _context.Entry(followAccount).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
+        [HttpDelete("{id}/Follow/{followId}")]
+        public async Task<IActionResult> UnFollowAccount(long id, long followId)
+        {
+            var ownAccount = await _context.Accounts.Include(a => a.Following).FirstOrDefaultAsync(a => a.AccountId == id);
+            if(ownAccount == null)
+            {
+                return BadRequest();
+            }
+
+            var followAccount = await _context.Accounts.Include(a => a.Followers).FirstOrDefaultAsync(a => a.AccountId == followId);
+            if(followAccount == null)
+            {
+                return BadRequest();
+            }
+
+            ownAccount.Following.Remove(followAccount);
+            followAccount.Followers.Remove(ownAccount);
+            _context.Entry(ownAccount).State = EntityState.Modified;
+            _context.Entry(followAccount).State = EntityState.Modified;
             await _context.SaveChangesAsync();
 
             return NoContent();

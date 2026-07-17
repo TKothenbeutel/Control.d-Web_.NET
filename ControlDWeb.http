@@ -22,3 +22,15 @@ DELETE {{HostAddress}}/api/Review/Likes/2/1
 ###
 
 GET {{HostAddress}}/api/Review/Likes/2
+
+###
+
+GET {{HostAddress}}/api/Account/1
+
+###
+
+PUT {{HostAddress}}/api/Account/1/Follow/2
+
+###
+
+PUT {{HostAddress}}/api/Account/2/Follow/1

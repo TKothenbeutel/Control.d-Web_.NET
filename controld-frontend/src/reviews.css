@@ -1,28 +1,5 @@
-.reviewContainer {
-    display: flex;
-    flex-direction: column;
-    background-color: var(--panelMask);
-    padding: 1vw;
-    min-width: 30vw;
-}
-
 .reviewBox {
-    display: grid;
     grid: auto auto auto auto / auto auto;
-    justify-items: space-between;
-    background-color: var(--textBox);
-    padding: 1vw;
-    margin-bottom: 1vw;
-
-    & > *{
-        color: var(--textDark);
-        margin-top: 0;
-        margin-bottom: 0;
-    }
-
-    & > .starRating{
-        justify-self: right;
-    }
 
     & > p{
         grid-area: 3 / 1 / span 1 / span 2;

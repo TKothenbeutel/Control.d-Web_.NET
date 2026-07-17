@@ -1,14 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import AccountDebug from './Account';
-import GamePage from './Games';
+import { GamePage } from './Games';
+import AccountPage from './Account';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <GamePage gameId={1} accountId={2}/>
+    <AccountPage accountId={1}/>
     <div style={{height:"50px",backgroundColor:"black"}}></div>
-    <AccountDebug />
+    <GamePage gameId={1} accountId={1}/>
   </React.StrictMode>
 );

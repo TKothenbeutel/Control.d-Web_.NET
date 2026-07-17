@@ -1,0 +1,39 @@
+.gameBox {
+    grid: auto auto / auto auto;
+
+    & > #name{
+        grid-row: span 2;
+    }
+
+    & > img{
+        justify-self: right;
+    }
+}
+
+.followContainer {
+    grid: auto / auto auto 1fr auto;
+    grid-template-areas: "a b c d";
+    align-items: center;
+    padding: 0.5vw;
+    justify-content: start;
+
+    & > button{
+        grid-area: d;
+    }
+
+    & > a{
+        text-decoration: none;
+    }
+}
+
+.profilePicture {
+    width: 20vw;
+    border: 2px solid black;
+    border-radius: 50%;
+}
+
+.smallPFP {
+    width: 3vw;
+    border-width: 1px;
+    margin-right: 1vw;
+}

@@ -18,7 +18,7 @@ body {
 
   background-color: var(--backgroundDark);
   color: var(--textLight);
-  padding: 5vw;/*40px;*/
+  padding: 5vw;
 }
 
 #root {
@@ -52,4 +52,81 @@ button:disabled{
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.nm {
+  margin: 0;
+}
+
+.clickableIcon {
+  height: 24px;
+  max-width: 24px;
+  pointer-events: "bounding-box";
+  user-select: none;
+}
+
+.twoPage {
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+
+  & > div:not(.verticalSeparator){
+    margin-top: 2%;
+    margin-bottom: 2%;
+    flex: 1 1 5px;
+    background-color: var(--panelMask);
+    padding: 1vw 2vw 1vw 2vw;
+  }
+}
+
+.twoColumn {
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+
+  & > div{
+    flex: 1 1 0px;
+  }
+
+  & > div:first-child{
+    margin-right: 1vw;
+  }
+}
+
+.verticalSeparator {
+  width: 0px;
+  border-left: 5px solid var(--backgroundDark);
+  padding: 0;
+  margin:  10% 10px 10% 10px !important;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--panelMask);
+  padding: 1vw;
+}
+
+.listContainer {
+  max-height: 50vh;
+  height: fit-content;
+  overflow-y: scroll;
+}
+
+.listItem {
+    display: grid;
+    justify-content: space-between;
+    background-color: var(--textBox);
+    padding: 1vw;
+    margin-bottom: 1vw;
+
+    & > *{
+        color: var(--textDark);
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+
+    & > .starRating{
+        justify-self: right;
+    }
 }
