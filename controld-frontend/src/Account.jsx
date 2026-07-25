@@ -2,10 +2,10 @@ import { useEffect, useState } from "react";
 import { OwnReview } from "./Reviews";
 import { favoriteGameToggle } from "./Games";
 import { Rating } from "./Rating";
-import defaultProfile from "./default-profile.png";
-import heart from "./heart.svg"
-import heartFill from "./heartFill.svg"
-import './account.css';
+import defaultProfile from "./images/default-profile.png";
+import heart from "./icons/heart.svg"
+import heartFill from "./icons/heartFill.svg"
+import './style/account.css';
 
 const DB_API = process.env.REACT_APP_API_URL;
 

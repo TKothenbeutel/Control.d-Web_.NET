@@ -79,6 +79,20 @@ code {
   }
 }
 
+.onePage {
+  display: flex;
+  flex-flow: column;
+  justify-content: space-between;
+
+  & > div{
+    margin-top: 2%;
+    margin-bottom: 2%;
+    flex: 1 1 5px;
+    background-color: var(--panelMask);
+    padding: 1vw 2vw 1vw 2vw;
+  }
+}
+
 .twoColumn {
   display: flex;
   flex-flow: row;

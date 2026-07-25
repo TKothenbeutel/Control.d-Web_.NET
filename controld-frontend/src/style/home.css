@@ -1,0 +1,45 @@
+.gameHome {
+  width: 12vw;
+  background-color: var(--textBox);
+  padding: 0.5vw;
+  border-radius: 10px;
+
+  & > img{
+    width: 12vw;
+    border-radius: 10px;
+  }
+
+  & > *{
+    height: fit-content;
+    text-wrap: wrap;
+    color: var(--textDark);
+  }
+}
+
+.sideScroll {
+  display: flex;
+  flex-direction: row;
+  overflow-x: scroll;
+  margin-left: 5vw;
+  margin-right: 5vw;
+  padding: 0 2vw 1vw 2vw;
+
+  & > .gameHome{
+    margin-right: 3vw;
+  }
+
+  mask-image: linear-gradient(
+    to right,
+    hsl(0 0% 0% / 1) 95.5%,
+    hsl(0 0% 0% / 0) 100%
+  );
+}
+
+.category {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+
+  & > h2{
+    margin: 10px 0 5px 0;
+  }
+}

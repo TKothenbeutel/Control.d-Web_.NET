@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Rating, RatingInput } from "./Rating";
-import "./reviews.css";
+import "./style/reviews.css";
 
 const DB_API = process.env.REACT_APP_API_URL;
 

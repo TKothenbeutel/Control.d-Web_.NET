@@ -17,6 +17,10 @@ GET {{HostAddress}}/api/Game/1
 
 ###
 
+GET {{HostAddress}}/api/Game
+
+###
+
 DELETE {{HostAddress}}/api/Review/Likes/2/1
 
 ###

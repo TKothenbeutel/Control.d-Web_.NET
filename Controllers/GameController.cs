@@ -35,6 +35,9 @@ namespace ControlDWeb.Controllers
             var items = await q
                 .Skip(query.Skip)
                 .Take(query.ClampedPageSize)
+                .Include(g => g.Publisher)
+                .Include(g => g.Genres)
+                .Include(g => g.Platforms)
                 .ToListAsync();
 
             return items;
@@ -66,6 +69,15 @@ namespace ControlDWeb.Controllers
             if (id != game.GameId)
             {
                 return BadRequest();
+            }
+
+            if(game.ReviewCount == 0)
+            {
+                game.AvgRating = 0;
+            }
+            else
+            {
+                game.AvgRating = game.RatingTotal / game.ReviewCount;
             }
 
             _context.Entry(game).State = EntityState.Modified;
@@ -152,10 +164,10 @@ namespace ControlDWeb.Controllers
             var ascending = q.SortDir.Equals("asc", StringComparison.OrdinalIgnoreCase);
             return q.SortBy.ToLower() switch
             {
-                "toprated" => ascending ? query.OrderBy(g => g.GetAvgRating()) : query.OrderByDescending(g => g.GetAvgRating()),
+                "toprated" => ascending ? query.OrderBy(g => g.AvgRating) : query.OrderByDescending(g => g.AvgRating),
                 "mostreviewed" => ascending ? query.OrderBy(g => g.ReviewCount) : query.OrderByDescending(g => g.ReviewCount),
                 "name" => ascending ? query.OrderBy(g => g.Name) : query.OrderByDescending(g => g.Name),
-                _ => query.OrderByDescending(g => g.GetAvgRating())
+                _ => query.OrderByDescending(g => g.AvgRating)
             };
         }
     }
@@ -165,7 +177,7 @@ namespace ControlDWeb.Controllers
         Platform[] OnPlatforms = null,
         string ByPublisher = null,
         string Search = null,
-        string SortBy = "topRated",
+        string SortBy = "",
         string SortDir = "desc",
         int Page = 1,
         int PageSize = 20

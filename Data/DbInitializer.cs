@@ -45,7 +45,7 @@ public static class DbInitializer
 
         var games = new Game[]
         {
-            new Game{Name="Portal", ReleaseDate=DateOnly.Parse("2007-10-10"), Description="Set in the mysterious Aperture Science Laboratories, Portal has been called one of the most innovative new games on the horizon and will offer gamers hours of unique gameplay.", ReviewCount=1, RatingTotal=4.5F, Publisher=publishers[0], Genres=new HashSet<Genre>{genres[0],genres[1]}, Platforms=new HashSet<Platform>{platforms[0],platforms[1],platforms[2]}}
+            new Game{Name="Portal", ReleaseDate=DateOnly.Parse("2007-10-10"), Description="Set in the mysterious Aperture Science Laboratories, Portal has been called one of the most innovative new games on the horizon and will offer gamers hours of unique gameplay.", ReviewCount=1, RatingTotal=4.5F, AvgRating=4.5F, Publisher=publishers[0], Genres=new HashSet<Genre>{genres[0],genres[1]}, Platforms=new HashSet<Platform>{platforms[0],platforms[1],platforms[2]}}
         };
         context.Games.AddRange(games);
         context.SaveChanges();

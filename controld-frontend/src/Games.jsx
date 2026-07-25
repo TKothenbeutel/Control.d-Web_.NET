@@ -1,8 +1,8 @@
 import { Suspense, useEffect, useState } from "react";
 import { Rating } from "./Rating";
 import { ReviewsBox } from "./Reviews";
-import PortalImage from "./portal.jpg";
-import './games.css';
+import PortalImage from "./images/portal.jpg";
+import './style/games.css';
 
 const DB_API = process.env.REACT_APP_API_URL;
 

@@ -1,9 +1,9 @@
 import { useState } from "react";
 
-import SvgStarLeft from "./starLeft.svg"
-import SvgStarRight from "./starRight.svg"
-import SvgStarFillLeft from "./starFillLeft.svg"
-import SvgStarFillRight from "./starFillRight.svg"
+import SvgStarLeft from "./icons/starLeft.svg"
+import SvgStarRight from "./icons/starRight.svg"
+import SvgStarFillLeft from "./icons/starFillLeft.svg"
+import SvgStarFillRight from "./icons/starFillRight.svg"
 
 const ratingStyle = {
   "display": "flex",
@@ -11,6 +11,8 @@ const ratingStyle = {
 };
 
 const starStyle = {
+  "display": "grid",
+  "grid": "auto / auto auto",
   "margin": "8px 1px 2px 0"
 };
 
