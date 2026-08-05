@@ -37,3 +37,44 @@
     border-width: 1px;
     margin-right: 1vw;
 }
+
+.accountForm {
+    display: flex;
+    flex-direction: column;
+    margin: 2vh 2vw 2vh 2vw;
+
+    & > h2{
+        text-align: center;
+    }
+    & > input:not([type="submit"]){
+        padding: 1vh 5px 1vh 5px;
+        margin-bottom: 2vh;
+        background-color: var(--panelMask);
+        border: unset;
+        border: 2px solid var(--textBox);
+        border-radius: 10px;
+        font-size: 16pt;
+        color: var(--textLight);
+        &:focus{
+            outline: unset;
+        }
+    }
+    & > input[type="submit"]{
+        width: 33%;
+        height: 10vh;
+        margin: auto;
+        margin-top: 2vh;
+        
+    }
+}
+
+.twoBigButtons {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    & > button{
+        height: 10vh;
+        width: 40%;
+        margin: 0 1% 4vh 1%;
+    }
+}

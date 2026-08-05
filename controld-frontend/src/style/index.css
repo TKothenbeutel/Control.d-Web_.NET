@@ -156,6 +156,14 @@ code {
   }
 }
 
+.centerPage {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  width: 40vw;
+  background-color: var(--panelMask);
+}
+
 .verticalSeparator {
   width: 0px;
   border-left: 5px solid var(--backgroundDark);
