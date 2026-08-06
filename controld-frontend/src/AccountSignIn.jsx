@@ -1,6 +1,8 @@
 import { useState } from "react";
 import "./style/account.css"
 
+const DB_API = process.env.REACT_APP_API_URL;
+
 export function SignUp(){
   const [ formFields, setFields ] = useState({});
 
@@ -56,7 +58,7 @@ export function SignUp(){
   );
 }
 
-export function LogIn(){
+export function LogIn({ updateTokens }){
   const [ formFields, setFields ] = useState({});
 
   const handleUpdate = (e) => {
@@ -65,8 +67,28 @@ export function LogIn(){
     setFields({...formFields, [name]:value});
   };
 
-  const logInAccount = () => {
-
+  const logInAccount = (event) => {
+    event.preventDefault();
+    fetch(DB_API+"/Account/Login",{
+      method: "POST",
+      headers: {
+        "Accept": "text/plain",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        "accountId": 0,
+        "email": formFields.email,
+        "username": formFields.username,
+        "password": formFields.password
+      })
+    })
+      .then(results => {
+        if(results.status === 200){
+          return results.json();
+        }
+        return null;
+      })
+      .then(data => updateTokens(data));
   };
 
   return (
@@ -85,6 +107,13 @@ export function LogIn(){
           value={formFields.username}
           onChange={handleUpdate}
           placeholder="Enter Username"
+          required
+        />
+        <input type="password"
+          name="password"
+          value={formFields.password}
+          onChange={handleUpdate}
+          placeholder="Enter Password"
           required
         />
         <input type="submit" value="GO"/>

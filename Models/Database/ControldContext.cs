@@ -11,6 +11,8 @@ public class ControldContext(DbContextOptions<ControldContext> options) : DbCont
     public DbSet<Platform> Platforms { get; set; }
     public DbSet<Genre> Genres { get; set; }
 
+    public DbSet<RefreshToken> RefreshTokens { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         //Connect entity to table
@@ -43,6 +45,11 @@ public class ControldContext(DbContextOptions<ControldContext> options) : DbCont
             .HasMany(e => e.Likers)
             .WithMany()//(e => e.LikedReviews)
             .UsingEntity<ReviewLikes>();
+        //Refresh Token
+        modelBuilder.Entity<RefreshToken>()
+            .HasOne(e => e.Account)
+            .WithMany()
+            .OnDelete(DeleteBehavior.Cascade);
     }
     
 }

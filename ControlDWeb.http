@@ -2,6 +2,31 @@
 
 GET {{HostAddress}}/api/Account
 Accept: application/json
+Authorization: Bearer hi
+
+###
+
+POST {{HostAddress}}/api/Account/Login
+Accept: text/plain
+Content-Type: application/json
+
+{
+    "accountId": 1,
+    "email": "fake@mail.com",
+    "username": "foobar",
+    "password": "hihi"
+}
+
+###
+
+POST {{HostAddress}}/api/Account/Refresh
+Accept: text/plain
+Content-Type: application/json
+
+{
+    "token": "",
+    "accountId": 1
+}
 
 ###
 
